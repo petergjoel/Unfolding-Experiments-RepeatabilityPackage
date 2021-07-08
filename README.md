@@ -5,7 +5,7 @@ This repository is a full repeatability package for producing all the results us
 
 # Requirements
 Running the experiments requires the following:
-- Python 3 (and the pandas, numpy and motplotlib packages installed)
+- Python 3 (and the pandas, numpy and matplotlib packages installed)
 - Java 8 (or newer) 
 - A linux operating system
 
