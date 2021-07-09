@@ -10,13 +10,18 @@ def read_mcc_df():
 
     unfoldable = []
 
+    added = False
     for file_name in filelist_mcc:
         f = open(cwd + "/output/mcc-linux/" + file_name, "r")
         line = f.readline()
         if line.startswith('runtime: out of memory') or line == "":
             unfoldable.append(file_name)
             continue
-
+        if "@" in line or len(line.strip()) == 0:
+            continue
+        print(line)
+        print(file_name)
+        added = True
         line_split = line.split(',')
         places = line_split[0].replace('place(s)', '').strip()
         transitions = line_split[1].replace('transition(s)', '').strip()
@@ -27,6 +32,8 @@ def read_mcc_df():
         row = {'name':[name],'places':[places], 'transitions': [transitions], 'arcs':[arcs], 'unfoldingtime':[unfoldingtime]}
         row_df = pd.DataFrame(row)
         mcc_df = mcc_df.append(row_df,ignore_index=True)
+    if not added:
+        unfoldable.append(file_name)
 
     mcc_df[['places','transitions','arcs','unfoldingtime']] = mcc_df[['places','transitions','arcs','unfoldingtime']].apply(pd.to_numeric)
 

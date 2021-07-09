@@ -24,8 +24,8 @@ for f in $(ls output/$1 ) ; do
         fi
 
         transitions="$(grep -Eo "and [1-9][0-9]* transitions " output/$1/$f -a | grep -Eo [1-9][0-9]*)"
-        rmtransitions="$(grep -Eo "and [1-9][0-9]* transitions\." output/$1/$f -a | grep -Eo [1-9][0-9]*)"
-
+	rmtransitions="$(grep -Eo "removed [1-9][0-9]* places and [1-9][0-9]* transitions\." output/$1/$f -a | grep -oP "(?<=places).*" | grep -Eo [1-9][0-9]*)"
+	echo "$f ($transitions) ($rmtransitions)"
         if [[ ! -z ${rmtransitions} ]] ; then
                 tsum=0
                 for i in $rmtransitions ; do
@@ -35,11 +35,11 @@ for f in $(ls output/$1 ) ; do
         else
                 endtransitions=$((transitions))
         fi
+	echo "\t$endtransitions"
         unfoldingtime="$(grep -Eo "arcs in [1-9][0-9]* ms" output/$1/$f -a | grep -Eo [1-9][0-9]*)"
         reductiontime="$(grep -Eo "places in [1-9][0-9]* ms" output/$1/$f -a | grep -Eo [1-9][0-9]*)"
 
-        if [ ! -z "${places}" ]; then
-                endtransitions=$((transitions-tsum))
+        if [ ! -z "${unfoldingtime}" ]; then
                 fulltime=0
 
                 if [ -z "${reductiontime}" ]; then
