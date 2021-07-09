@@ -5,26 +5,29 @@ This repository is a full repeatability package for producing all the results us
 
 # Requirements
 Running the experiments requires the following:
-- Python 3 (and the pandas, numpy and motplotlib packages installed)
+- Python 3 (and the pandas, numpy and matplotlib packages installed)
 - Java 8 (or newer) 
 - A linux operating system
 
 Note that you may need to give executable rights to all bash scripts and binaries.
 
 # Unfolding experiments
-We provide all the results from our experiments which are located in the precomputed-results directory. If you wish to produce the results yourself please navigate the the UnfoldingExperiments directory and run the following command (WARNING: these experiments were performed on a compute cluster and may take days to compute locally):
+We provide all the results from our experiments which are located in the precomputed-results directory. If you wish to produce the results yourself please navigate the the UnfoldingExperiments directory and run the following command (WARNING: these experiments were performed on a compute cluster and take a couple of hours to complete for each tool):
 
-`./run_unfolding_exp.sh MCC2020-COL`
+`./run_unfolding_exp.sh MCC2020-COL A+B`
+
+If you wish to recompute for another configuration that `A+B` you can replace it by either `MCC`, `ITS`, `SPIKE`, `A`, `B` or `TRUNK` to recompute these results.
+Notice that the scripts are assuming that only ONE experiment is executing at any given timepoint.
 
 If you instead wish to run a small instance we provide a smaller subset of the full MCC2020-COL folder called MCC2020-COL-subset (which includes the smallest instance of each model from the competition). Then run the following command:
 
-`./run_unfolding_exp.sh MCC2020-COL-subset`
+`./run_unfolding_exp.sh MCC2020-COL-subset A+B`
 
 After running the experiment the results folder will be populated with a csv file with unfolding results for each tool. Moreover, the cactus plots from the paper will be produced in the results directory. Note that if the experiments were run with MCC2020-COL-subset then there will be many instances of each model missing from the plots and results. 
 
 We also include another subset folder of models from the competition we deem "interesting". These are models where the A+B method produces very small nets compared to the competition. To run this use the following command:
 
-`./run_unfolding_exp.sh MCC2020-COL-interesting`
+`./run_unfolding_exp.sh MCC2020-COL-interesting A+B`
 
 # Verification Experiments
 To repreduce the verification results from the paper please navigate to the QueryExperiments directory and run the following command (WARNING: these experiments were performed on a compute cluster and may take many days to compute locally - even more so compared to the unfolding experiments):
